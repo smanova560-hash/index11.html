@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6-сынып информатика тесті</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    color: #222;
+}
+
+.container {
+    width: 95%;
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+.card {
+    background: white;
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #4b3f9b;
+    margin-top: 0;
+}
+
+h2 {
+    color: #4b3f9b;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.info-box {
+    background: #f4f1ff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+input, select {
+    width: 100%;
+    padding: 13px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+button {
+    border: none;
+    border-radius: 12px;
+    padding: 13px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.start-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    margin-top: 20px;
+}
+
+.variant-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.variant-btn {
+    background: #eee;
+    color: #333;
+}
+
+.variant-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+#testArea {
+    display: none;
+}
+
+.progress {
+    height: 12px;
+    background: #eee;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 15px 0 25px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    width: 0%;
+    transition: 0.3s;
+}
+
+.question-number {
+    color: #667eea;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.question {
+    font-size: 21px;
+    font-weight: bold;
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+.answers {
+    display: grid;
+    gap: 12px;
+}
+
+.answer {
+    background: #f7f7f7;
+    border: 2px solid #ddd;
+    padding: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 17px;
+    transition: 0.2s;
+}
+
+.answer:hover {
+    background: #eef0ff;
+    border-color: #667eea;
+}
+
+.answer.selected {
+    background: #e7e9ff;
+    border-color: #667eea;
+}
+
+.answer.correct {
+    background: #d9f8df;
+    border-color: #27ae60;
+}
+
+.answer.wrong {
+    background: #ffe0e0;
+    border-color: #e74c3c;
+}
+
+.feedback {
+    min-height: 45px;
+    margin-top: 18px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.back-btn {
+    background: #777;
+    color: white;
+}
+
+.next-btn {
+    background: #667eea;
+    color: white;
+}
+
+.finish-btn {
+    background: #27ae60;
+    color: white;
+}
+
+#result {
+    display: none;
+    text-align: center;
+}
+
+.result-circle {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    margin: 25px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.result-circle .score {
+    font-size: 42px;
+    font-weight: bold;
+}
+
+.result-info {
+    background: #f5f5ff;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.restart-btn {
+    background: #667eea;
+    color: white;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.small {
+    color: #777;
+    font-size: 14px;
+}
+
+@media(max-width:600px) {
+    .card {
+        padding: 20px;
+    }
+
+    .question {
+        font-size: 18px;
+    }
+
+    .navigation {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- БАСТАПҚЫ БЕТ -->
+<div class="card" id="startScreen">
+
+    <h1>💻 6-сынып информатика</h1>
+
+    <p class="subtitle">
+        Компьютерлік жүйелер және қауіпсіздік<br>
+        Жасанды интеллект • Компьютер жадысы • Файлдық жүйе
+    </p>
+
+    <div class="info-box">
+
+        <h2>👨‍🎓 Оқушы туралы ақпарат</h2>
+
+        <label for="studentClass">Сыныбы:</label>
+        <input type="text" id="studentClass"
+               placeholder="Мысалы: 6 «А»">
+
+        <label for="subject">Пәні:</label>
+        <input type="text" id="subject"
+               value="Информатика">
+
+        <label for="studentName">Оқушының аты-жөні:</label>
+        <input type="text" id="studentName"
+               placeholder="Аты-жөніңізді енгізіңіз">
+
+    </div>
+
+    <h2>📚 Тест нұсқасын таңдаңыз</h2>
+
+    <div class="variant-box">
+        <button class="variant-btn active" onclick="selectVariant(1)">1-нұсқа</button>
+        <button class="variant-btn" onclick="selectVariant(2)">2-нұсқа</button>
+        <button class="variant-btn" onclick="selectVariant(3)">3-нұсқа</button>
+        <button class="variant-btn" onclick="selectVariant(4)">4-нұсқа</button>
+        <button class="variant-btn" onclick="selectVariant(5)">5-нұсқа</button>
+        <button class="variant-btn" onclick="selectVariant(6)">6-нұсқа</button>
+    </div>
+
+    <p class="small">
+        Әр нұсқада 10 сұрақ және әр сұрақта 4 жауап нұсқасы бар.
+    </p>
+
+    <button class="start-btn" onclick="startTest()">
+        🚀 Тестті бастау
+    </button>
+
+</div>
+
+
+<!-- ТЕСТ -->
+<div class="card" id="testArea">
+
+    <h1>📝 Информатика тесті</h1>
+
+    <div id="studentInfo"></div>
+
+    <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="question-number" id="questionNumber"></div>
+
+    <div class="question" id="questionText"></div>
+
+    <div class="answers" id="answers"></div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <div class="navigation">
+        <button class="back-btn" onclick="previousQuestion()">
+            ⬅️ Артқа
+        </button>
+
+        <button class="next-btn" id="nextBtn"
+                onclick="nextQuestion()">
+            Алға ➡️
+        </button>
+
+        <button class="finish-btn hidden"
+                id="finishBtn"
+                onclick="finishTest()">
+            🏁 Тестті аяқтау
+        </button>
+    </div>
+
+</div>
+
+
+<!-- НӘТИЖЕ -->
+<div class="card" id="result">
+
+    <h1>🎉 Тест аяқталды!</h1>
+
+    <div class="result-circle">
+        <div class="score" id="scoreText">0/10</div>
+        <div>нәтиже</div>
+    </div>
+
+    <div class="result-info">
+        <p><b>👨‍🎓 Оқушы:</b> <span id="resultName"></span></p>
+        <p><b>🏫 Сыныбы:</b> <span id="resultClass"></span></p>
+        <p><b>📚 Пәні:</b> <span id="resultSubject"></span></p>
+        <p><b>📌 Нұсқа:</b> <span id="resultVariant"></span></p>
+        <p><b>📊 Пайыз:</b> <span id="resultPercent"></span>%</p>
+        <p><b>🏆 Баға:</b> <span id="resultGrade"></span></p>
+    </div>
+
+    <div id="resultMessage"
+         style="font-size:22px;font-weight:bold;">
+    </div>
+
+    <button class="restart-btn" onclick="location.reload()">
+        🔄 Қайта тапсыру
+    </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   6 НҰСҚА × 10 СҰРАҚ
+===================================================== */
+
+const tests = {
+
+1: [
+{
+q:"Интернетте жеке құпия ақпаратты қорғаудың дұрыс тәсілі қайсы?",
+a:["Құпиясөзді барлығына айту","Күрделі құпиясөз қолдану","Барлық сайтқа бір құпиясөз қолдану","Бейтаныс адамға мәлімет жіберу"],
+c:1
+},
+{
+q:"Интернеттегі алаяқтық дегеніміз не?",
+a:["Компьютерді тазалау","Адамды алдап, оның ақшасын немесе деректерін иемдену","Файлды көшіру","Принтерді пайдалану"],
+c:1
+},
+{
+q:"Интернеттегі агрессияға не жатады?",
+a:["Досқа көмектесу","Кибербуллинг және қорлау","Ақпарат іздеу","Электрондық кітап оқу"],
+c:1
+},
+{
+q:"Ойынға тәуелділіктің ықтимал салдары қандай?",
+a:["Уақытты тиімді пайдалану","Денсаулық пен оқу үлгерімінің нашарлауы","Компьютердің жылдамдауы","Жады көлемінің артуы"],
+c:1
+},
+{
+q:"Жасанды интеллект моделін оқытуда деректердің рөлі қандай?",
+a:["Модельге ақпараттық мысалдар беру","Компьютерді өшіру","Экранды тазалау","Пернетақтаны ауыстыру"],
+c:0
+},
+{
+q:"«Деректер» ұғымына қайсысы жатады?",
+a:["Өңделмеген фактілер мен мәліметтер","Тек компьютердің өзі","Тек интернет","Тек білім"],
+c:0
+},
+{
+q:"RAM жадының негізгі қызметі қандай?",
+a:["Деректерді уақытша сақтау","Компьютерді басып шығару","Дыбыс шығару","Интернетке қосу"],
+c:0
+},
+{
+q:"Процессордың тактілік жиілігі нені сипаттайды?",
+a:["Экран өлшемін","Процессордың жұмыс жылдамдығын","Пернетақта санын","Диск түсін"],
+c:1
+},
+{
+q:"Операциялық жүйенің негізгі қызметтерінің бірі:",
+a:["Компьютер ресурстарын басқару","Қағаз жасау","Үстелді тазалау","Интернетті өшіру"],
+c:0
+},
+{
+q:"Файл кеңейтілімі нені көрсетеді?",
+a:["Файл түрін","Компьютердің түсін","Монитор көлемін","Пернетақта өлшемін"],
+c:0
+}
+],
+
+2: [
+{
+q:"Бейтаныс адам интернетте сізден құпиясөз сұрады. Не істеу керек?",
+a:["Құпиясөзді жіберу","Жауап бермей, ересек адамға хабарлау","Оған телефон нөмірін беру","Барлық жеке ақпаратты жіберу"],
+c:1
+},
+{
+q:"Фишингтің негізгі мақсаты қандай?",
+a:["Музыка тыңдату","Құпия ақпаратты алдап алу","Компьютерді жөндеу","Файлдарды реттеу"],
+c:1
+},
+{
+q:"Кибербуллинг дегеніміз не?",
+a:["Интернет арқылы қорқыту немесе қорлау","Компьютерді жаңарту","Сурет салу","Файлды сақтау"],
+c:0
+},
+{
+q:"Интернетті қауіпсіз пайдаланудың бір ережесі:",
+a:["Барлық сілтемені ашу","Бейтаныс сілтемелерге сақ болу","Құпиясөзді жариялау","Жеке мекенжайды жариялау"],
+c:1
+},
+{
+q:"ЖИ моделін оқытуға сапалы деректер не үшін қажет?",
+a:["Модельдің дұрыс нәтиже шығаруын жақсарту үшін","Компьютерді ауырлату үшін","Экран түсін өзгерту үшін","Пернетақтаны өшіру үшін"],
+c:0
+},
+{
+q:"Ақпарат дегеніміз не?",
+a:["Деректерді түсіндіру арқылы алынған мағыналы мәлімет","Тек пернетақта","Тек процессор","Тек файл атауы"],
+c:0
+},
+{
+q:"ROM жадының ерекшелігі:",
+a:["Ақпаратты тұрақты сақтайды","Тек уақытша жұмыс істейді","Тек дыбыс шығарады","Тек интернетке қосады"],
+c:0
+},
+{
+q:"CPU дегеніміз не?",
+a:["Орталық процессор","Сыртқы диск","Монитор","Пернетақта"],
+c:0
+},
+{
+q:"Файлдарды сақтауға арналған құрылғы:",
+a:["SSD","Тінтуір","Монитор","Микрофон"],
+c:0
+},
+{
+q:"Операциялық жүйеге мысал:",
+a:["Windows","Paintbrush","Калькулятор","Пернетақта"],
+c:0
+}
+],
+
+3: [
+{
+q:"Қауіпсіз құпиясөз қандай болуы керек?",
+a:["123456","qwerty","Әріп, сан және арнайы таңбалардан тұратын күрделі","Өз атыңыз"],
+c:2
+},
+{
+q:"Интернет алаяқтығына тап болсаңыз не істеген дұрыс?",
+a:["Ақша жіберу","Алаяқпен келісу","Ата-анаға немесе мұғалімге хабарлау","Құпиясөзді беру"],
+c:2
+},
+{
+q:"Кибербуллингтің құрбаны болған адамға қалай көмектесуге болады?",
+a:["Оны мазақтау","Қолдау көрсету және ересекке айту","Хабарламаны тарату","Жағдайды елемеу"],
+c:1
+},
+{
+q:"Ойынға тәуелділіктің алдын алу үшін:",
+a:["Уақытты шектеп пайдалану","Күні бойы ойнау","Ұйқыдан бас тарту","Сабақты тоқтату"],
+c:0
+},
+{
+q:"Жасанды интеллект дегеніміз не?",
+a:["Адамның кейбір интеллектуалдық әрекеттерін орындайтын технологиялар","Тек компьютердің экраны","Принтер түрі","Файл кеңейтілімі"],
+c:0
+},
+{
+q:"ЖИ моделін оқыту процесінде деректер қалай қолданылады?",
+a:["Модель заңдылықтарды деректерден үйренеді","Деректер жойылады","Компьютер өшеді","Монитор өзгереді"],
+c:0
+},
+{
+q:"Кэш-жадының басты мақсаты:",
+a:["Процессорға жиі қажет деректерге жылдам қол жеткізу","Файл басып шығару","Интернет тарату","Дыбыс жазу"],
+c:0
+},
+{
+q:"Процессордағы ядролар саны нені білдіреді?",
+a:["Бір уақытта орындалатын өңдеу жұмыстарының мүмкіндігін сипаттайды","Монитор көлемін көрсетеді","Жад көлемін көрсетеді","Файл санын көрсетеді"],
+c:0
+},
+{
+q:"Папка не үшін қолданылады?",
+a:["Файлдарды ұйымдастырып сақтау үшін","Процессорды салқындату үшін","Дыбыс шығару үшін","Сурет басып шығару үшін"],
+c:0
+},
+{
+q:".docx кеңейтілімі көбіне қандай файлға тән?",
+a:["Мәтіндік құжатқа","Музыкаға","Бейнефайлға","Суретке"],
+c:0
+}
+],
+
+4: [
+{
+q:"Жеке ақпаратқа қайсысы жатады?",
+a:["Сүйікті түс","Құпиясөз және банк картасы туралы мәлімет","Компьютер маркасы","Ойын атауы"],
+c:1
+},
+{
+q:"Әлеуметтік желіде бейтаныс адамның хабарламасына:",
+a:["Барлық мәліметті жіберу","Сақтықпен қарап, қажет болса бұғаттау","Құпиясөз жіберу","Үй мекенжайын жіберу"],
+c:1
+},
+{
+q:"Интернеттегі жауапкершілік дегеніміз:",
+a:["Өз әрекетінің салдарын түсіну","Кез келген ақпаратты тарату","Басқаларды қорлау","Құпия ақпаратты жариялау"],
+c:0
+},
+{
+q:"Экран алдында ұзақ отырудың алдын алу үшін:",
+a:["Үзіліс жасап, көзге жаттығу жасау","Үзіліссіз отыру","Тек түнде пайдалану","Жарықты өшіру"],
+c:0
+},
+{
+q:"ЖИ нәтижесінің сапасына не әсер етеді?",
+a:["Оқыту деректерінің сапасы","Монитор түсі","Тінтуірдің өлшемі","Компьютер үстелі"],
+c:0
+},
+{
+q:"Білім ұғымы нені білдіреді?",
+a:["Түсінілген және тәжірибеде қолданылатын ақпарат","Кездейсоқ сандар","Тек файл атауы","Тек сурет"],
+c:0
+},
+{
+q:"RAM жады:",
+a:["Компьютер жұмыс істеп тұрған кезде деректерді уақытша сақтайды","Мәліметті мәңгі сақтайды","Тек дыбыс шығарады","Тек сурет көрсетеді"],
+c:0
+},
+{
+q:"SSD қандай құрылғы?",
+a:["Сыртқы/тұрақты сақтау құрылғысы","Процессор ядросы","Монитор","Пернетақта"],
+c:0
+},
+{
+q:"Файлдық жүйе не үшін қажет?",
+a:["Файлдар мен бумаларды ұйымдастыру үшін","Компьютерді бояу үшін","Дыбыс шығару үшін","Интернетті өшіру үшін"],
+c:0
+},
+{
+q:"Windows қандай программа?",
+a:["Операциялық жүйе","Графикалық карта","Процессор","Антивирус қана"],
+c:0
+}
+],
+
+5: [
+{
+q:"Күдікті электрондық хат келсе:",
+a:["Барлық сілтемені басу","Жіберушіні тексеріп, күмәнді хатты ашпау","Құпиясөз жіберу","Хатты достарға тарату"],
+c:1
+},
+{
+q:"Интернетте басқа адамды әдейі қорлау:",
+a:["Кибербуллинг болуы мүмкін","Қауіпсіздік ережесі","Ақпарат сақтау","Файл көшіру"],
+c:0
+},
+{
+q:"Ойынға тәуелділіктің белгісі:",
+a:["Ойын үшін оқу мен күнделікті міндеттерді елемеу","Уақытты жоспарлау","Спортпен айналысу","Уақытында ұйықтау"],
+c:0
+},
+{
+q:"Екі факторлы аутентификацияның мақсаты:",
+a:["Аккаунт қауіпсіздігін арттыру","Компьютерді баяулату","Экранды үлкейту","Файлдарды жою"],
+c:0
+},
+{
+q:"Деректерді ЖИ оқытуда қолданудың мысалы:",
+a:["Суреттер арқылы модельді нысандарды тануға үйрету","Мониторды тазалау","Пернетақтаны ауыстыру","Компьютерді өшіру"],
+c:0
+},
+{
+q:"Дерек пен ақпараттың айырмашылығы:",
+a:["Ақпарат — мағынасы түсіндірілген деректер","Екеуі мүлдем бірдей","Дерек тек сурет","Ақпарат тек музыка"],
+c:0
+},
+{
+q:"CPU-дың негізгі қызметі:",
+a:["Командаларды өңдеу және орындау","Сурет басып шығару","Дыбыс жазу","Интернет кабелін сақтау"],
+c:0
+},
+{
+q:"Тактілік жиілік әдетте қандай бірлікпен өлшенеді?",
+a:["ГГц","Килограмм","Метр","Литр"],
+c:0
+},
+{
+q:"Файлды басқа бумаға жылжыту дегеніміз:",
+a:["Файлдың орналасқан орнын өзгерту","Файлды міндетті түрде жою","Компьютерді өшіру","Файлды басып шығару"],
+c:0
+},
+{
+q:".jpg кеңейтілімі қандай файлға тән?",
+a:["Сурет","Мәтіндік құжат","Бағдарлама","Дыбыс"],
+c:0
+}
+],
+
+6: [
+{
+q:"Интернетте қауіпсіз жұмыс істеудің ең дұрыс қағидасы:",
+a:["Барлығына сену","Жеке ақпаратты қорғау және күмәнді әрекеттерден сақ болу","Құпиясөзді жариялау","Кез келген файлды жүктеу"],
+c:1
+},
+{
+q:"Алаяқтықтан қорғанудың тиімді жолы:",
+a:["Күмәнді ұсыныстарды тексеру","Бейтаныс адамға ақша жіберу","Кодты айту","Карта нөмірін жариялау"],
+c:0
+},
+{
+q:"Интернеттегі агрессияға қарсы әрекет:",
+a:["Қарсы агрессия көрсету","Бұғаттау, дәлелді сақтау және ересекке хабарлау","Ақпаратты тарату","Қорлауға жауап беру"],
+c:1
+},
+{
+q:"Компьютерді дұрыс пайдаланудың бір ережесі:",
+a:["Дұрыс отыру және үзіліс жасау","Мониторға тым жақын отыру","Ұзақ уақыт үзіліссіз ойнау","Жарықсыз жұмыс істеу"],
+c:0
+},
+{
+q:"ЖИ моделіне берілетін оқу мысалдарының жиынтығы қалай аталады?",
+a:["Оқыту деректері","Пернетақта","Монитор","Бума"],
+c:0
+},
+{
+q:"ЖИ моделінің қателесуіне не себеп болуы мүмкін?",
+a:["Сапасыз немесе жеткіліксіз деректер","Таза монитор","Жаңа тінтуір","Үлкен үстел"],
+c:0
+},
+{
+q:"Компьютердің негізгі есептеу құрылғысы:",
+a:["Орталық процессор","Принтер","Монитор","Пернетақта"],
+c:0
+},
+{
+q:"Тұрақты сақтау құрылғысына мысал:",
+a:["SSD","RAM","Кэш","Процессор"],
+c:0
+},
+{
+q:"Файл атауы мен кеңейтілімі не үшін қажет?",
+a:["Файлды анықтау және оның түрін ажырату үшін","Мониторды қосу үшін","Интернет жылдамдығын арттыру үшін","Компьютерді салқындату үшін"],
+c:0
+},
+{
+q:"Операциялық жүйе қандай міндет атқарады?",
+a:["Компьютер құрылғылары мен бағдарламаларының жұмысын басқарады","Тек музыка тыңдатады","Тек мәтін тереді","Тек сурет салады"],
+c:0
+}
+]
+
+};
+
+
+/* =====================================================
+   АЙНЫМАЛЫЛАР
+===================================================== */
+
+let selectedVariant = 1;
+let currentQuestion = 0;
+let userAnswers = [];
+let questions = [];
+
+let studentName = "";
+let studentClass = "";
+let subject = "";
+
+
+/* =====================================================
+   НҰСҚА ТАҢДАУ
+===================================================== */
+
+function selectVariant(number) {
+
+    selectedVariant = number;
+
+    document.querySelectorAll(".variant-btn")
+        .forEach((btn, index) => {
+            btn.classList.toggle(
+                "active",
+                index === number - 1
+            );
+        });
+}
+
+
+/* =====================================================
+   ТЕСТТІ БАСТАУ
+===================================================== */
+
+function startTest() {
+
+    studentName =
+        document.getElementById("studentName").value.trim();
+
+    studentClass =
+        document.getElementById("studentClass").value.trim();
+
+    subject =
+        document.getElementById("subject").value.trim();
+
+    if (!studentClass) {
+        alert("⚠️ Сыныбыңызды енгізіңіз!");
+        return;
+    }
+
+    if (!studentName) {
+        alert("⚠️ Оқушының аты-жөнін енгізіңіз!");
+        return;
+    }
+
+    if (!subject) {
+        alert("⚠️ Пәнді енгізіңіз!");
+        return;
+    }
+
+    questions = JSON.parse(
+        JSON.stringify(tests[selectedVariant])
+    );
+
+    userAnswers = new Array(questions.length).fill(null);
+
+    currentQuestion = 0;
+
+    document.getElementById("startScreen")
+        .style.display = "none";
+
+    document.getElementById("testArea")
+        .style.display = "block";
+
+    document.getElementById("studentInfo").innerHTML =
+        `<p>
+        👨‍🎓 <b>${studentName}</b> |
+        🏫 ${studentClass} |
+        📚 ${subject} |
+        📌 ${selectedVariant}-нұсқа
+        </p>`;
+
+    showQuestion();
+}
+
+
+/* =====================================================
+   СҰРАҚТЫ КӨРСЕТУ
+===================================================== */
+
+function showQuestion() {
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("questionNumber")
+        .textContent =
+        `Сұрақ ${currentQuestion + 1} / ${questions.length}`;
+
+    document.getElementById("questionText")
+        .textContent = q.q;
+
+    const answersDiv =
+        document.getElementById("answers");
+
+    answersDiv.innerHTML = "";
+
+    q.a.forEach((answer, index) => {
+
+        const div = document.createElement("div");
+
+        div.className = "answer";
+
+        div.innerHTML =
+            `<b>${String.fromCharCode(65 + index)}.</b> ${answer}`;
+
+        if (userAnswers[currentQuestion] === index) {
+
+            div.classList.add("selected");
+
+            if (index === q.c) {
+                div.classList.add("correct");
+            } else {
+                div.classList.add("wrong");
+            }
+        }
+
+        div.onclick = function() {
+            selectAnswer(index);
+        };
+
+        answersDiv.appendChild(div);
+    });
+
+    updateFeedback();
+
+    const progress =
+        ((currentQuestion + 1) / questions.length) * 100;
+
+    document.getElementById("progressBar")
+        .style.width = progress + "%";
+
+    document.querySelector(".back-btn")
+        .disabled = currentQuestion === 0;
+
+    if (currentQuestion === questions.length - 1) {
+
+        document.getElementById("nextBtn")
+            .classList.add("hidden");
+
+        document.getElementById("finishBtn")
+            .classList.remove("hidden");
+
+    } else {
+
+        document.getElementById("nextBtn")
+            .classList.remove("hidden");
+
+        document.getElementById("finishBtn")
+            .classList.add("hidden");
+    }
+}
+
+
+/* =====================================================
+   ЖАУАП ТАҢДАУ
+===================================================== */
+
+function selectAnswer(index) {
+
+    userAnswers[currentQuestion] = index;
+
+    showQuestion();
+}
+
+
+/* =====================================================
+   КЕРІ БАЙЛАНЫС
+===================================================== */
+
+function updateFeedback() {
+
+    const feedback =
+        document.getElementById("feedback");
+
+    const answer =
+        userAnswers[currentQuestion];
+
+    if (answer === null) {
+        feedback.innerHTML = "";
+        return;
+    }
+
+    const correct =
+        questions[currentQuestion].c;
+
+    if (answer === correct) {
+
+        const messages = [
+            "🎉 Дұрыс жауап! Жарайсың!",
+            "😊 Керемет! Дұрыс орындадың!",
+            "🥳 Тамаша! Білімің мықты!",
+            "👏 Өте жақсы! Дәл таптың!",
+            "🌟 Жарайсың! Алға!"
+        ];
+
+        feedback.innerHTML =
+            messages[
+                Math.floor(Math.random() * messages.length)
+            ];
+
+        feedback.style.color = "#27ae60";
+
+    } else {
+
+        feedback.innerHTML =
+            "😔 Қате жауап. 💡 Дұрыс жауапты қайта қарап көр!";
+
+        feedback.style.color = "#e74c3c";
+    }
+}
+
+
+/* =====================================================
+   АРТҚА
+===================================================== */
+
+function previousQuestion() {
+
+    if (currentQuestion > 0) {
+
+        currentQuestion--;
+
+        showQuestion();
+    }
+}
+
+
+/* =====================================================
+   АЛҒА
+===================================================== */
+
+function nextQuestion() {
+
+    if (userAnswers[currentQuestion] === null) {
+
+        alert("⚠️ Алдымен жауап нұсқасын таңдаңыз!");
+
+        return;
+    }
+
+    if (currentQuestion < questions.length - 1) {
+
+        currentQuestion++;
+
+        showQuestion();
+    }
+}
+
+
+/* =====================================================
+   ТЕСТТІ АЯҚТАУ
+===================================================== */
+
+function finishTest() {
+
+    const unanswered =
+        userAnswers.filter(a => a === null).length;
+
+    if (unanswered > 0) {
+
+        alert(
+            `⚠️ ${unanswered} сұраққа жауап бермедіңіз!`
+        );
+
+        return;
+    }
+
+    let score = 0;
+
+    questions.forEach((q, index) => {
+
+        if (userAnswers[index] === q.c) {
+            score++;
+        }
+    });
+
+    const percent =
+        Math.round((score / questions.length) * 100);
+
+    let grade;
+    let message;
+
+    if (percent >= 90) {
+
+        grade = "5 — Өте жақсы 🌟";
+        message =
+            "🥳 Құттықтаймыз! Сіз тестті өте жақсы орындадыңыз!";
+
+    } else if (percent >= 75) {
+
+        grade = "4 — Жақсы 👍";
+        message =
+            "😊 Жақсы нәтиже! Біліміңізді одан әрі жетілдіре беріңіз!";
+
+    } else if (percent >= 50) {
+
+        grade = "3 — Қанағаттанарлық 🙂";
+        message =
+            "💡 Жаман емес! Кейбір тақырыптарды қайталап шыққан дұрыс.";
+
+    } else {
+
+        grade = "2 — Қанағаттанарлықсыз 😔";
+        message =
+            "📚 Уайымдамаңыз! Тақырыптарды қайталап, тестті қайта орындап көріңіз.";
+    }
+
+    document.getElementById("testArea")
+        .style.display = "none";
+
+    document.getElementById("result")
+        .style.display = "block";
+
+    document.getElementById("scoreText")
+        .textContent =
+        `${score}/${questions.length}`;
+
+    document.getElementById("resultName")
+        .textContent = studentName;
+
+    document.getElementById("resultClass")
+        .textContent = studentClass;
+
+    document.getElementById("resultSubject")
+        .textContent = subject;
+
+    document.getElementById("resultVariant")
+        .textContent = selectedVariant;
+
+    document.getElementById("resultPercent")
+        .textContent = percent;
+
+    document.getElementById("resultGrade")
+        .textContent = grade;
+
+    document.getElementById("resultMessage")
+        .textContent = message;
+}
+
+</script>
+
+</body>
+</html>
